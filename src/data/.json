@@ -1,0 +1,24 @@
+[
+  {
+    "id": "vault-001",
+    "title": "Neon Monsoon",
+    "style": "Street Art",
+    "collection": "Urban Decay Vol 1",
+    "tags": ["bold", "pink", "cinematic"],
+    "digitalPrice": 15,
+    "physicalPrice": 65,
+    "imageUrl": "/assets/art/neon-monsoon.jpg",
+    "isCommercial": true
+  },
+  {
+    "id": "vault-002",
+    "title": "Oil & Ether",
+    "style": "Bold Oil",
+    "collection": "The Salon Hangs",
+    "tags": ["texture", "dark", "classic"],
+    "digitalPrice": 20,
+    "physicalPrice": 80,
+    "imageUrl": "/assets/art/oil-ether.jpg",
+    "isCommercial": true
+  }
+]
