@@ -1,38 +1,85 @@
-<div class="bg-black text-white min-h-screen font-sans">
-  
-  <section class="relative h-[80vh] flex items-center justify-center overflow-hidden border-b border-zinc-800">
-    <div class="z-10 text-center px-4">
-      <h1 class="text-6xl md:text-8xl font-black uppercase tracking-tighter mb-4">
-        Exit the Print Shop
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exit the Print Shop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom smooth scrolling and font scaling */
+        html { scroll-behavior: smooth; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-black text-white font-sans antialiased">
+
+  <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-zinc-900 px-6 py-4 flex justify-between items-center">
+    <div class="font-black uppercase tracking-tighter text-xl">ETPS.</div>
+    <div class="flex gap-6 uppercase text-[10px] tracking-widest font-bold">
+      <a href="#" class="hover:text-zinc-400">Vault</a>
+      <a href="#" class="hover:text-zinc-400">Trade</a>
+    </div>
+  </nav>
+
+  <section class="relative h-[70vh] md:h-[85vh] flex items-center justify-center overflow-hidden">
+    <div class="z-10 text-center px-6 mt-16">
+      <h1 class="text-5xl md:text-8xl font-black uppercase tracking-tighter mb-4 leading-none">
+        Exit the <br class="md:hidden"> Print Shop
       </h1>
-      <p class="text-zinc-400 text-lg md:text-xl max-w-2xl mx-auto uppercase tracking-widest">
+      <p class="text-zinc-400 text-xs md:text-sm max-w-2xl mx-auto uppercase tracking-[0.3em]">
         Digital Vault & Commercial Art House
       </p>
-      <button class="mt-8 px-8 py-4 bg-white text-black font-bold uppercase hover:bg-zinc-200 transition">
+      <button class="mt-10 px-8 py-4 bg-white text-black text-xs font-black uppercase hover:invert transition-all duration-300">
         Enter The Vault
       </button>
     </div>
     <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/60 to-black"></div>
     <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=1200&q=80" 
-         class="absolute inset-0 w-full h-full object-cover -z-10 opacity-60" />
+         class="absolute inset-0 w-full h-full object-cover -z-10 opacity-50" />
   </section>
 
-  <main class="max-w-[1600px] mx-auto py-20 px-6">
-    <div class="flex justify-between items-end mb-12">
-      <h2 class="text-3xl font-bold uppercase">Current Drops</h2>
-      <a href="#" class="text-zinc-500 hover:text-white underline uppercase text-sm">View All Past Collections</a>
+  <main class="max-w-[1600px] mx-auto py-12 md:py-20 px-4 md:px-6">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-12 gap-4">
+      <div>
+        <h2 class="text-2xl md:text-4xl font-black uppercase tracking-tighter">Current Drops</h2>
+        <p class="text-zinc-500 text-[10px] uppercase tracking-widest mt-1">Curated Collections Vol. 01</p>
+      </div>
+      <a href="#" class="text-zinc-400 hover:text-white underline uppercase text-[10px] tracking-widest font-bold">View Archive</a>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
-      <div class="group relative aspect-[3/4] overflow-hidden bg-zinc-900 cursor-pointer">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4">
+      
+      <div class="group relative aspect-[3/4] overflow-hidden bg-zinc-900">
         <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=800&q=80" 
-             class="w-full h-full object-cover transition duration-700 group-hover:scale-105" />
-        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity p-8 flex flex-col justify-end">
-          <p class="text-xs uppercase tracking-widest mb-1 text-zinc-300">Abstract Watercolor</p>
-          <h3 class="text-2xl font-bold uppercase">Bleed Series No. 1</h3>
-          <p class="mt-4 font-mono text-sm">$15 Digital / $65 Physical</p>
+             class="w-full h-full object-cover transition duration-700 group-hover:scale-110" />
+        
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity p-4 md:p-8 flex flex-col justify-end">
+          <p class="text-[8px] md:text-xs uppercase tracking-widest text-zinc-300">Abstract Watercolor</p>
+          <h3 class="text-sm md:text-2xl font-bold uppercase leading-tight">Bleed Series No. 1</h3>
+          <p class="mt-2 font-mono text-[9px] md:text-sm">$15 Digital / $65 Physical</p>
+          <button class="mt-4 w-full py-2 border border-white/50 text-[9px] uppercase font-black hover:bg-white hover:text-black transition">Add to Vault</button>
         </div>
       </div>
+
+      <div class="group relative aspect-[3/4] overflow-hidden bg-zinc-900">
+        <img src="https://images.unsplash.com/photo-1633167606207-d840b5070fc2?q=80&w=800" 
+             class="w-full h-full object-cover transition duration-700 group-hover:scale-110" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity p-4 md:p-8 flex flex-col justify-end">
+          <p class="text-[8px] md:text-xs uppercase tracking-widest text-zinc-300">Bold Oil</p>
+          <h3 class="text-sm md:text-2xl font-bold uppercase leading-tight">Neon Monsoon</h3>
+          <p class="mt-2 font-mono text-[9px] md:text-sm">$20 Digital / $80 Physical</p>
+          <button class="mt-4 w-full py-2 border border-white/50 text-[9px] uppercase font-black hover:bg-white hover:text-black transition">Add to Vault</button>
+        </div>
       </div>
+
+    </div>
   </main>
-</div>
+
+  <footer class="bg-zinc-950 py-20 px-6 border-t border-zinc-900 text-center">
+    <p class="text-zinc-500 uppercase tracking-widest text-xs mb-4">Are you a trade professional?</p>
+    <h3 class="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-8">Hotel & Retail Rollouts</h3>
+    <button class="px-8 py-4 border border-white text-xs font-black uppercase hover:bg-white hover:text-black transition">Request Commercial Quote</button>
+  </footer>
+
+</body>
+</html>
