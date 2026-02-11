@@ -1,24 +1,17 @@
-[
-  {
-    "id": "vault-001",
-    "title": "Neon Monsoon",
-    "style": "Street Art",
-    "collection": "Urban Decay Vol 1",
-    "tags": ["bold", "pink", "cinematic"],
-    "digitalPrice": 15,
-    "physicalPrice": 65,
-    "imageUrl": "/assets/art/neon-monsoon.jpg",
-    "isCommercial": true
+{
+  "bundle": {
+    "id": "bundle-01",
+    "title": "The Street Art Suite Vol. 1",
+    "description": "A curated salon hang for high-contrast spaces.",
+    "digitalPrice": 45,
+    "physicalPrice": 250,
+    "imageIds": [1, 2, 3, 4, 5]
   },
-  {
-    "id": "vault-002",
-    "title": "Oil & Ether",
-    "style": "Bold Oil",
-    "collection": "The Salon Hangs",
-    "tags": ["texture", "dark", "classic"],
-    "digitalPrice": 20,
-    "physicalPrice": 80,
-    "imageUrl": "/assets/art/oil-ether.jpg",
-    "isCommercial": true
-  }
-]
+  "items": [
+    { "id": 1, "title": "Neon Monsoon", "style": "Street Art", "price": 15, "img": "https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8" },
+    { "id": 2, "title": "Oil & Ether", "style": "Bold Oil", "price": 15, "img": "https://images.unsplash.com/photo-1541701494587-cb58502866ab" },
+    { "id": 3, "title": "Liquid Sky", "style": "Abstract", "price": 15, "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe" },
+    { "id": 4, "title": "Concrete Ghost", "style": "Graffiti", "price": 15, "img": "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3" },
+    { "id": 5, "title": "Urban Bloom", "style": "Cinematic", "price": 15, "img": "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5" }
+  ]
+}
