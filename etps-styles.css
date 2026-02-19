@@ -1,0 +1,230 @@
+/* ═══════════════════════════════════════════════
+   ETPS — Exit The Print Shop
+   Global Stylesheet — applies to ALL pages
+   To update the look site-wide, edit this file.
+═══════════════════════════════════════════════ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #0a0a0a;
+  --white: #f5f5f3;
+  --off: #e0e0dc;
+  --mid: #888882;
+  --dim: #444440;
+  --nav-height: 54px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--white);
+  color: var(--black);
+  overflow-x: hidden;
+  padding-top: var(--nav-height);
+}
+
+/* ── GOOGLE FONTS — loaded in each HTML head
+   Bebas Neue + DM Sans
+─────────────────────────────────────────── */
+
+/* ─────────────────────────────────────
+   NAV — global, controlled by etps-nav.js
+───────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px; height: var(--nav-height);
+  background: var(--black);
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 17px; letter-spacing: 0.07em;
+  text-decoration: none; display: flex; align-items: baseline;
+}
+.nav-logo .logo-exit { color: var(--white); }
+.nav-logo .logo-rest { color: var(--white); font-size: 17px; letter-spacing: 0.07em; }
+.nav-logo .logo-mobile { display: none; color: var(--white); font-size: 17px; letter-spacing: 0.1em; }
+
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px; letter-spacing: 0.08em;
+  color: rgba(245,245,243,0.45); text-decoration: none; transition: color 0.2s;
+}
+.nav-links a:hover,
+.nav-links a.active { color: var(--white); }
+
+.nav-right { display: flex; align-items: center; gap: 12px; }
+.nav-bag {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 15px; letter-spacing: 0.1em;
+  color: var(--white); background: none;
+  border: 1px solid rgba(255,255,255,0.22); padding: 5px 14px;
+  cursor: pointer; transition: background 0.2s, color 0.2s; text-decoration: none;
+  display: inline-block;
+}
+.nav-bag:hover { background: var(--white); color: var(--black); }
+
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  background: none; border: none; cursor: pointer; padding: 4px;
+}
+.hamburger span { display: block; width: 22px; height: 1.5px; background: var(--white); }
+
+/* Mobile menu */
+.mob-menu {
+  position: fixed; inset: 0; background: var(--black); z-index: 300;
+  display: flex; flex-direction: column; padding: 80px 32px 48px; gap: 4px;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+}
+.mob-menu.open { opacity: 1; pointer-events: all; }
+.mob-close {
+  position: absolute; top: 18px; right: 28px;
+  font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 0.1em;
+  color: rgba(245,245,243,0.35); background: none; border: none; cursor: pointer;
+}
+.mob-menu a {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 56px; line-height: 1.05;
+  color: var(--white); text-decoration: none; transition: color 0.2s;
+}
+.mob-menu a:hover { color: var(--mid); }
+.mob-bottom { margin-top: auto; display: flex; gap: 20px; }
+.mob-bottom a {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 14px; letter-spacing: 0.1em; color: rgba(245,245,243,0.3); text-decoration: none;
+}
+
+/* ─────────────────────────────────────
+   BUTTONS — use these everywhere
+───────────────────────────────────── */
+.btn {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px; letter-spacing: 0.12em;
+  padding: 13px 28px; cursor: pointer;
+  text-decoration: none; display: inline-block;
+  border: none; transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.btn-solid-dark { background: var(--black); color: var(--white); border: 1px solid var(--black); }
+.btn-solid-dark:hover { background: var(--dim); border-color: var(--dim); }
+.btn-solid-light { background: var(--white); color: var(--black); border: 1px solid var(--white); }
+.btn-solid-light:hover { background: var(--off); }
+.btn-outline-dark { background: none; color: var(--black); border: 1px solid rgba(10,10,10,0.35); }
+.btn-outline-dark:hover { background: var(--black); color: var(--white); border-color: var(--black); }
+.btn-outline-light { background: none; color: var(--white); border: 1px solid rgba(245,245,243,0.35); }
+.btn-outline-light:hover { background: var(--white); color: var(--black); border-color: var(--white); }
+
+/* ─────────────────────────────────────
+   TICKER
+───────────────────────────────────── */
+.ticker {
+  background: var(--white);
+  border-bottom: 1px solid rgba(10,10,10,0.1);
+  padding: 10px 0; overflow: hidden; white-space: nowrap;
+}
+.ticker-track { display: inline-flex; animation: tickerRun 24s linear infinite; }
+.ticker-item {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 14px; letter-spacing: 0.14em;
+  color: var(--black); padding: 0 24px;
+}
+.ticker-item.sep { color: var(--mid); padding: 0 6px; font-size: 10px; }
+@keyframes tickerRun { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ─────────────────────────────────────
+   SECTION LABELS
+───────────────────────────────────── */
+.section-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 11px; letter-spacing: 0.25em; color: var(--mid);
+  display: block; margin-bottom: 12px;
+}
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(40px, 5vw, 72px); line-height: 1; color: var(--black);
+}
+
+/* ─────────────────────────────────────
+   PRICING BADGE — digital vs print
+───────────────────────────────────── */
+.badge {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 11px; letter-spacing: 0.15em;
+  padding: 4px 10px; display: inline-block;
+}
+.badge-digital { background: var(--black); color: var(--white); }
+.badge-print { background: var(--off); color: var(--dim); }
+
+/* ─────────────────────────────────────
+   FOOTER
+───────────────────────────────────── */
+footer {
+  background: var(--black);
+  border-top: 1px solid rgba(245,245,243,0.07); padding: 44px 32px;
+}
+.footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 36px;
+}
+.f-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 15px; letter-spacing: 0.08em;
+  color: var(--white); display: block; margin-bottom: 8px; text-decoration: none;
+}
+.f-tagline { font-size: 13px; font-style: italic; color: rgba(245,245,243,0.28); line-height: 1.5; }
+.f-col-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px; letter-spacing: 0.2em; color: rgba(245,245,243,0.28); margin-bottom: 12px;
+}
+.f-col ul { list-style: none; }
+.f-col li { margin-bottom: 8px; }
+.f-col a { font-size: 13px; color: rgba(245,245,243,0.45); text-decoration: none; transition: color 0.2s; }
+.f-col a:hover { color: var(--white); }
+.f-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 20px; border-top: 1px solid rgba(245,245,243,0.06);
+}
+.f-copy {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 12px; letter-spacing: 0.06em; color: rgba(245,245,243,0.18);
+}
+.f-socials { display: flex; gap: 20px; }
+.f-socials a {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px; letter-spacing: 0.1em;
+  color: rgba(245,245,243,0.3); text-decoration: none; transition: color 0.2s;
+}
+.f-socials a:hover { color: var(--white); }
+
+/* ─────────────────────────────────────
+   SCROLL REVEAL — used on all pages
+───────────────────────────────────── */
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.reveal.in { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.3s; }
+.reveal-d4 { transition-delay: 0.4s; }
+
+/* ─────────────────────────────────────
+   RESPONSIVE — global breakpoints
+───────────────────────────────────── */
+@media (max-width: 1024px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .nav-logo .logo-exit,
+  .nav-logo .logo-rest { display: none; }
+  .nav-logo .logo-mobile { display: inline; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+
+@media (max-width: 640px) {
+  nav { padding: 0 18px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+  .f-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  footer { padding: 36px 20px; }
+}

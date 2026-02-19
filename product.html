@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Study in Orange — ETPS</title>
+  <meta name="description" content="Digital download from $5 or print on demand from $140.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="etps-styles.css" />
+  <style>
+    /* ── PRODUCT PAGE SPECIFIC ── */
+    .product-wrap {
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 54px);
+    }
+
+    /* Left: image */
+    .product-visual {
+      position: sticky; top: 54px; height: calc(100vh - 54px);
+      background: #111; overflow: hidden;
+    }
+    .product-img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      filter: grayscale(60%); transition: filter 0.6s ease;
+    }
+    .product-visual:hover .product-img { filter: grayscale(0%); }
+    .product-img-nav {
+      position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 8px; z-index: 2;
+    }
+    .img-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(245,245,243,0.3); cursor: pointer; transition: background 0.2s; }
+    .img-dot.active { background: var(--white); }
+
+    /* Right: info */
+    .product-info { padding: 56px 56px 80px; display: flex; flex-direction: column; }
+    .product-back {
+      font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 0.15em;
+      color: var(--mid); text-decoration: none; display: inline-flex; align-items: center;
+      gap: 6px; margin-bottom: 32px; transition: color 0.2s;
+    }
+    .product-back:hover { color: var(--black); }
+    .product-collection { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 0.25em; color: var(--mid); display: block; margin-bottom: 10px; }
+    .product-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 5vw, 80px); line-height: 1; color: var(--black); margin-bottom: 20px; }
+    .product-desc { font-size: 15px; font-weight: 300; line-height: 1.8; color: var(--dim); margin-bottom: 40px; max-width: 440px; }
+
+    /* Pricing toggle */
+    .product-type-toggle {
+      display: flex; gap: 2px; margin-bottom: 32px;
+    }
+    .type-btn {
+      flex: 1; font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 0.1em;
+      padding: 14px 16px; cursor: pointer; border: 1px solid rgba(10,10,10,0.15);
+      background: none; color: var(--mid); transition: all 0.2s; text-align: center;
+    }
+    .type-btn.active { background: var(--black); color: var(--white); border-color: var(--black); }
+
+    /* Options panels */
+    .options-panel { display: none; }
+    .options-panel.active { display: block; }
+
+    /* Digital panel */
+    .digital-sizes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 24px; }
+    .size-btn {
+      font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 0.08em;
+      padding: 12px 8px; border: 1px solid rgba(10,10,10,0.15); background: none;
+      cursor: pointer; text-align: center; transition: all 0.2s; color: var(--dim);
+    }
+    .size-btn:hover { border-color: var(--black); color: var(--black); }
+    .size-btn.active { background: var(--black); color: var(--white); border-color: var(--black); }
+    .size-label { display: block; font-size: 11px; opacity: 0.6; margin-top: 2px; font-family: 'DM Sans', sans-serif; font-weight: 300; font-style: italic; }
+
+    /* Print panel */
+    .print-sizes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 24px; }
+    .print-size-btn {
+      font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 0.08em;
+      padding: 14px 12px; border: 1px solid rgba(10,10,10,0.15); background: none;
+      cursor: pointer; text-align: left; transition: all 0.2s; color: var(--dim);
+    }
+    .print-size-btn:hover { border-color: var(--black); color: var(--black); }
+    .print-size-btn.active { background: var(--black); color: var(--white); border-color: var(--black); }
+    .print-size-price { display: block; font-size: 15px; margin-bottom: 2px; }
+    .print-size-dim { display: block; font-size: 11px; opacity: 0.5; font-family: 'DM Sans', sans-serif; font-weight: 300; font-style: italic; }
+
+    /* Selected price display */
+    .selected-price {
+      font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 0.04em;
+      color: var(--black); margin-bottom: 24px;
+    }
+
+    /* CTA */
+    .product-cta { display: flex; flex-direction: column; gap: 10px; }
+    .btn-buy {
+      font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.12em;
+      background: var(--black); color: var(--white); border: none;
+      padding: 18px 32px; cursor: pointer; text-align: center;
+      text-decoration: none; display: block; transition: background 0.2s;
+    }
+    .btn-buy:hover { background: var(--dim); }
+    .btn-buy.digital-btn { background: var(--black); }
+    .product-note { font-size: 12px; font-style: italic; color: var(--mid); text-align: center; margin-top: 4px; }
+
+    /* Details accordion */
+    .product-details { margin-top: 48px; border-top: 1px solid rgba(10,10,10,0.1); }
+    .detail-row {
+      border-bottom: 1px solid rgba(10,10,10,0.1); overflow: hidden;
+    }
+    .detail-trigger {
+      font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 0.12em;
+      color: var(--black); background: none; border: none; width: 100%;
+      text-align: left; padding: 16px 0; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .detail-trigger::after { content: '+'; font-size: 18px; transition: transform 0.3s; }
+    .detail-trigger.open::after { transform: rotate(45deg); }
+    .detail-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .detail-body.open { max-height: 400px; }
+    .detail-body p { font-size: 14px; font-weight: 300; color: var(--dim); line-height: 1.7; padding-bottom: 20px; }
+
+    @media (max-width: 1024px) {
+      .product-wrap { grid-template-columns: 1fr; }
+      .product-visual { position: relative; height: 70vw; min-height: 320px; top: 0; }
+      .product-info { padding: 40px 32px 60px; }
+    }
+    @media (max-width: 640px) {
+      .product-info { padding: 32px 20px 60px; }
+      .digital-sizes { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="product-wrap">
+
+  <!-- LEFT: IMAGE -->
+  <div class="product-visual">
+    <!--
+      Replace this src with your actual product image.
+      Add more images by updating the JS below and dot nav.
+    -->
+    <img class="product-img" id="productImg"
+      src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=1200&q=88"
+      alt="Study in Orange" />
+    <div class="product-img-nav">
+      <div class="img-dot active"></div>
+    </div>
+  </div>
+
+  <!-- RIGHT: INFO -->
+  <div class="product-info">
+    <a href="shop.html" class="product-back">← Back to Shop</a>
+
+    <span class="product-collection">Chromatic Riot — Collection 01</span>
+    <h1 class="product-title">Study in<br>Orange</h1>
+    <p class="product-desc">An explosive study in warm tones, this piece commands any wall it's on. Available as an instant digital download or a professionally printed archival piece shipped to your door.</p>
+
+    <!-- TYPE TOGGLE -->
+    <div class="product-type-toggle">
+      <button class="type-btn active" data-panel="digital" onclick="switchType('digital')">
+        ⬇ Digital Download
+      </button>
+      <button class="type-btn" data-panel="print" onclick="switchType('print')">
+        🖨 Print on Demand
+      </button>
+    </div>
+
+    <!-- DIGITAL PANEL -->
+    <div class="options-panel active" id="panel-digital">
+      <div class="section-label">Select File Size</div>
+      <div class="digital-sizes">
+        <button class="size-btn active" onclick="selectDigitalSize(this, '$5')">
+          A4 <span class="size-label">8.3 × 11.7"</span>
+        </button>
+        <button class="size-btn" onclick="selectDigitalSize(this, '$8')">
+          A3 <span class="size-label">11.7 × 16.5"</span>
+        </button>
+        <button class="size-btn" onclick="selectDigitalSize(this, '$12')">
+          A2 <span class="size-label">16.5 × 23.4"</span>
+        </button>
+        <button class="size-btn" onclick="selectDigitalSize(this, '$15')">
+          18×24" <span class="size-label">Poster size</span>
+        </button>
+        <button class="size-btn" onclick="selectDigitalSize(this, '$20')">
+          24×36" <span class="size-label">Large poster</span>
+        </button>
+        <button class="size-btn" onclick="selectDigitalSize(this, '$25')">
+          Full Pack <span class="size-label">All sizes</span>
+        </button>
+      </div>
+      <div class="selected-price" id="digital-price">$5</div>
+      <div class="product-cta">
+        <!--
+          GUMROAD SETUP:
+          1. Go to gumroad.com and create a free account
+          2. Upload your image as a product
+          3. Set price (e.g. $5)
+          4. Copy your Gumroad product link
+          5. Replace href="#" below with your Gumroad link
+          6. Repeat for each size/product
+        -->
+        <a href="#" class="btn-buy digital-btn" id="digital-buy-btn" target="_blank">
+          Download Now — <span id="digital-price-inline">$5</span>
+        </a>
+        <p class="product-note">Instant download. High-res 300dpi JPG + PNG. Personal use only.</p>
+      </div>
+    </div>
+
+    <!-- PRINT PANEL -->
+    <div class="options-panel" id="panel-print">
+      <div class="section-label">Select Print Size</div>
+      <div class="print-sizes">
+        <button class="print-size-btn active" onclick="selectPrintSize(this, '$45')">
+          <span class="print-size-price">$45</span>
+          <span class="print-size-dim">8×10" — Unframed</span>
+        </button>
+        <button class="print-size-btn" onclick="selectPrintSize(this, '$85')">
+          <span class="print-size-price">$85</span>
+          <span class="print-size-dim">12×16" — Unframed</span>
+        </button>
+        <button class="print-size-btn" onclick="selectPrintSize(this, '$120')">
+          <span class="print-size-price">$120</span>
+          <span class="print-size-dim">18×24" — Unframed</span>
+        </button>
+        <button class="print-size-btn" onclick="selectPrintSize(this, '$140')">
+          <span class="print-size-price">$140</span>
+          <span class="print-size-dim">24×36" — Unframed</span>
+        </button>
+        <button class="print-size-btn" onclick="selectPrintSize(this, '$180')">
+          <span class="print-size-price">$180</span>
+          <span class="print-size-dim">12×16" — Framed</span>
+        </button>
+        <button class="print-size-btn" onclick="selectPrintSize(this, '$240')">
+          <span class="print-size-price">$240</span>
+          <span class="print-size-dim">18×24" — Framed</span>
+        </button>
+      </div>
+      <div class="selected-price" id="print-price">$45</div>
+      <div class="product-cta">
+        <!--
+          PRINT ON DEMAND SETUP:
+          Option A — Use Printful or Printify:
+            1. Connect to your store (Shopify or Etsy)
+            2. Upload art, set markup
+            3. Link to that product page
+
+          Option B — Simple for now:
+            Link to a contact form or email
+            "Order enquiry" → you fulfil manually while testing
+
+          Replace href="#" with your order link
+        -->
+        <a href="mailto:hello@exittheprintshop.com?subject=Print Order — Study in Orange" class="btn-buy" id="print-buy-btn">
+          Order Print — <span id="print-price-inline">$45</span>
+        </a>
+        <p class="product-note">Archival giclée print. Ships in a protective tube within 5–7 days.</p>
+      </div>
+    </div>
+
+    <!-- DETAILS -->
+    <div class="product-details">
+      <div class="detail-row">
+        <button class="detail-trigger" onclick="toggleDetail(this)">About This Piece</button>
+        <div class="detail-body">
+          <p>Created as part of the Chromatic Riot collection. This piece was designed to be bold, warm, and impossible to ignore. Each print is produced on archival-grade cotton rag paper using professional giclée printing.</p>
+        </div>
+      </div>
+      <div class="detail-row">
+        <button class="detail-trigger" onclick="toggleDetail(this)">Digital Download Info</button>
+        <div class="detail-body">
+          <p>Your file will be available for immediate download after purchase via Gumroad. Files are high-resolution 300dpi, suitable for professional printing at any size. Personal use only — not for resale or commercial use.</p>
+        </div>
+      </div>
+      <div class="detail-row">
+        <button class="detail-trigger" onclick="toggleDetail(this)">Print & Shipping</button>
+        <div class="detail-body">
+          <p>Prints are produced on archival cotton rag paper using giclée printing. Ships rolled in a protective tube within 5–7 business days. Worldwide shipping available. Framed prints ship flat in a reinforced box.</p>
+        </div>
+      </div>
+      <div class="detail-row">
+        <button class="detail-trigger" onclick="toggleDetail(this)">Returns</button>
+        <div class="detail-body">
+          <p>Digital downloads are non-refundable once downloaded. For print orders, if your print arrives damaged, we'll replace it — just send us a photo within 7 days of delivery.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="etps-nav.js"></script>
+<script>
+  // ── Type switcher (Digital / Print)
+  function switchType(type) {
+    document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector(`[data-panel="${type}"]`).classList.add('active');
+    document.querySelectorAll('.options-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById(`panel-${type}`).classList.add('active');
+  }
+
+  // ── Digital size selector
+  function selectDigitalSize(btn, price) {
+    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('digital-price').textContent = price;
+    document.getElementById('digital-price-inline').textContent = price;
+  }
+
+  // ── Print size selector
+  function selectPrintSize(btn, price) {
+    document.querySelectorAll('.print-size-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('print-price').textContent = price;
+    document.getElementById('print-price-inline').textContent = price;
+  }
+
+  // ── Details accordion
+  function toggleDetail(trigger) {
+    const body = trigger.nextElementSibling;
+    const isOpen = body.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.detail-body').forEach(b => b.classList.remove('open'));
+    document.querySelectorAll('.detail-trigger').forEach(t => t.classList.remove('open'));
+    // Open clicked if it was closed
+    if (!isOpen) { body.classList.add('open'); trigger.classList.add('open'); }
+  }
+</script>
+</body>
+</html>
