@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AboutETPS</title>
+  <meta name="description" content="Quality art for everyone. Digital downloads from $5. Built by the community.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="etps-styles.css" />
+  <style>
+    .about-hero { background: var(--black); padding: 80px 32px 64px; }
+    .about-hero-label { font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 0.25em; color: rgba(245,245,243,0.3); display: block; margin-bottom: 16px; }
+    .about-hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(56px, 10vw, 120px); line-height: 1; color: var(--white); }
+
+    .about-body { max-width: 800px; margin: 0 auto; padding: 80px 32px; }
+    .about-section { margin-bottom: 72px; }
+    .about-section-label { font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 0.25em; color: var(--mid); display: block; margin-bottom: 16px; }
+    .about-section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px, 5vw, 64px); line-height: 1; color: var(--black); margin-bottom: 24px; }
+    .about-section p { font-size: 16px; font-weight: 300; line-height: 1.85; color: var(--dim); margin-bottom: 16px; }
+    .about-section strong { color: var(--black); font-weight: 400; font-style: italic; }
+    .about-divider { width: 40px; height: 1px; background: var(--mid); margin: 28px 0; }
+
+    /* How it works — digital only */
+    .how-it-works { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin: 32px 0; }
+    .how-step { padding: 32px 24px; border: 1px solid rgba(10,10,10,0.1); }
+    .how-num { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--off); margin-bottom: 12px; line-height: 1; }
+    .how-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.06em; color: var(--black); margin-bottom: 8px; }
+    .how-desc { font-size: 14px; font-weight: 300; color: var(--dim); line-height: 1.65; font-style: italic; }
+
+    /* Print on demand coming soon */
+    .pod-section {
+      background: var(--off); border: 1px solid rgba(10,10,10,0.08);
+      padding: 48px; margin-bottom: 72px;
+    }
+    .pod-label { font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 0.25em; color: var(--mid); display: block; margin-bottom: 12px; }
+    .pod-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px, 5vw, 56px); line-height: 1; color: var(--dim); margin-bottom: 16px; }
+    .pod-desc { font-size: 15px; font-weight: 300; color: var(--dim); line-height: 1.7; font-style: italic; margin-bottom: 20px; max-width: 520px; }
+    .pod-btn { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 0.15em; color: var(--mid); border: 1px solid rgba(10,10,10,0.2); background: none; padding: 11px 20px; cursor: default; opacity: 0.5; display: inline-block; }
+
+    /* FAQ */
+    .faq-item { border-top: 1px solid rgba(10,10,10,0.1); }
+    .faq-item:last-child { border-bottom: 1px solid rgba(10,10,10,0.1); }
+    .faq-q {
+      font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.08em;
+      color: var(--black); background: none; border: none; width: 100%;
+      text-align: left; padding: 20px 0; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .faq-q::after { content: '+'; font-size: 20px; transition: transform 0.3s; flex-shrink: 0; }
+    .faq-q.open::after { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .faq-a.open { max-height: 400px; }
+    .faq-a p { font-size: 15px; font-weight: 300; color: var(--dim); line-height: 1.75; padding-bottom: 20px; }
+
+    @media (max-width: 768px) {
+      .how-it-works { grid-template-columns: 1fr; }
+      .pod-section { padding: 32px 24px; }
+    }
+    @media (max-width: 640px) {
+      .about-hero { padding: 60px 20px 48px; }
+      .about-body { padding: 56px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="about-hero">
+  <span class="about-hero-label">The Story</span>
+  <h1 class="about-hero-title">Exit The<br>Print Shop</h1>
+</div>
+
+<div class="about-body">
+
+  <!-- MISSION -->
+  <div class="about-section reveal">
+    <span class="about-section-label">Why We Exist</span>
+    <h2 class="about-section-title">Quality art.<br>Accessible price.</h2>
+    <p>
+      <strong>Exit The Print Shop was created with one belief at its core:</strong> great art shouldn't be locked behind gallery walls and four-figure price tags. It belongs in real homes, in everyday spaces, on walls that actually mean something to the people who live with them.
+    </p>
+    <p>
+      We started by asking a simple question — why does owning a piece of art you love have to cost so much? The answer, usually, is that it doesn't have to. Digital files, print technology, and the ability to share work directly with people who want it have changed the game completely.
+    </p>
+    <p>
+      So we built ETPS. A place where you can download a high-resolution art file for the price of a coffee, take it to your local print shop, and have something genuinely beautiful on your wall by the end of the day.
+    </p>
+    <div class="about-divider"></div>
+    <p>
+      <strong>Our collections are built to evolve</strong> — shaped by community feedback, current cultural trends, and a deep appreciation for art history in all its forms. From movements that redefined how we see the world, to the aesthetics defining what's happening right now. We're here for all of it.
+    </p>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="about-section reveal">
+    <span class="about-section-label">How It Works</span>
+    <h2 class="about-section-title">Three steps.<br>Art on your wall.</h2>
+
+    <div class="how-it-works">
+      <div class="how-step">
+        <div class="how-num">01</div>
+        <div class="how-title">Browse & Buy</div>
+        <p class="how-desc">Find a piece you love. Digital downloads start at $5. Pay once, keep the file forever.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">02</div>
+        <div class="how-title">Instant Download</div>
+        <p class="how-desc">Your high-res 300dpi file arrives immediately via Gumroad. No waiting, no shipping, no hassle.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">03</div>
+        <div class="how-title">Print Anywhere</div>
+        <p class="how-desc">Take it to your local print shop, use an online service, or print at home. The art is yours to print as many times as you like, for personal use.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRINT ON DEMAND — COMING SOON -->
+  <div class="pod-section reveal">
+    <span class="pod-label">Coming Soon</span>
+    <h3 class="pod-title">Print on Demand</h3>
+    <p class="pod-desc">
+      Want it handled for you? We're setting up professional print on demand — archival giclée printing on cotton rag paper, shipped in a protective tube directly to your door. Framed and unframed options. We're getting this right before we launch it.
+    </p>
+    <p class="pod-desc">Sign up to the mailing list and you'll be first to know when it goes live.</p>
+    <span class="pod-btn">Coming Soon — Sign Up Below</span>
+  </div>
+
+  <!-- FAQ -->
+  <div class="about-section" id="faq">
+    <span class="about-section-label">Questions</span>
+    <h2 class="about-section-title">FAQ</h2>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">What exactly do I get when I buy a digital download?</button>
+      <div class="faq-a"><p>A high-resolution 300dpi JPG and PNG file, delivered instantly via Gumroad download link. You can print it at any size up to the resolution you purchased, as many times as you like, for personal use.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Where should I print my file?</button>
+      <div class="faq-a"><p>Anywhere you like. Good options include your local print shop, Snapfish, Costco Photo Centre, Staples, or a quality home inkjet printer. Ask for heavyweight matte paper or cotton rag for the best result. Most local shops can turn it around same day.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Can I use the art commercially?</button>
+      <div class="faq-a"><p>No — digital downloads are for personal use only. That means printing for your own home or as a personal gift. Reselling prints, using in advertising, or commercial display requires a separate licence. Email us to discuss.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">When is print on demand launching?</button>
+      <div class="faq-a"><p>We're working on it. We want to make sure the print quality, packaging, and shipping is worth it before we launch. Sign up to the mailing list on the homepage and you'll be the first to know — and likely get a launch discount.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Can I suggest a collection or style?</button>
+      <div class="faq-a"><p>Absolutely — this is the whole point. Our collections are shaped by community feedback. DM us on Instagram or TikTok, or email hello@exittheprintshop.com. If enough people want a particular style or subject, we'll build it.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">What's your refund policy?</button>
+      <div class="faq-a"><p>Digital downloads are non-refundable once accessed, as the file is delivered immediately. If you have a technical issue with your download, email hello@exittheprintshop.com and we'll make it right.</p></div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="about-section reveal" id="contact">
+    <span class="about-section-label">Get In Touch</span>
+    <h2 class="about-section-title">Say Hi</h2>
+    <p>For questions, collection suggestions, collaborations, or anything else:</p>
+    <a href="mailto:hello@exittheprintshop.com" class="btn btn-solid-dark" style="margin-top: 12px; display: inline-block;">hello@exittheprintshop.com</a>
+  </div>
+
+</div>
+
+<!-- NEWSLETTER -->
+<section style="background: var(--black); padding: 80px 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;">
+  <div>
+    <span style="font-family:'Bebas Neue',sans-serif; font-size:13px; letter-spacing:0.22em; color:rgba(245,245,243,0.28); display:block; margin-bottom:12px;">Stay In The Loop</span>
+    <h2 style="font-family:'Bebas Neue',sans-serif; font-size:clamp(48px,5.5vw,80px); line-height:0.95; color:var(--white);">New Art.<br>Every Week.</h2>
+  </div>
+  <div>
+    <p style="font-size:15px; font-weight:300; font-style:italic; color:rgba(245,245,243,0.38); line-height:1.7; margin-bottom:24px;">Digital downloads from $5. New collections built with community input. And yes — you'll be first to know when print on demand launches.</p>
+    <form style="display:flex; border:1px solid rgba(245,245,243,0.18);" onsubmit="nlSubmit(event)">
+      <input type="email" class="nl-input" placeholder="your@email.com" required style="flex:1; font-family:'DM Sans',sans-serif; font-size:14px; font-style:italic; background:none; border:none; color:var(--white); padding:14px 16px; outline:none;" />
+      <button type="submit" style="font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:0.14em; background:var(--white); color:var(--black); border:none; padding:14px 22px; cursor:pointer;">Join →</button>
+    </form>
+    <p style="font-size:11px; color:rgba(245,245,243,0.18); margin-top:10px; font-style:italic;">No spam. Unsubscribe anytime.</p>
+  </div>
+</section>
+
+<script src="etps-nav.js"></script>
+<script>
+  function toggleFaq(btn) {
+    var answer = btn.nextElementSibling;
+    var isOpen = answer.classList.contains('open');
+    document.querySelectorAll('.faq-a').forEach(function(a) { a.classList.remove('open'); });
+    document.querySelectorAll('.faq-q').forEach(function(q) { q.classList.remove('open'); });
+    if (!isOpen) { answer.classList.add('open'); btn.classList.add('open'); }
+  }
+</script>
+</body>
+</html>
