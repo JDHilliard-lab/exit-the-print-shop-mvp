@@ -4,15 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ETPS</title>
-  <meta name="description" content="Digital art downloads from $5. Print on demand wall art. Exit The Print Shop.">
+  <meta name="description" content="Quality art for everyone. Digital downloads from $5. Exit The Print Shop.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="etps-styles.css" />
   <style>
-    /* ── PAGE-SPECIFIC: Homepage only ── */
-    body { padding-top: 0; } /* hero covers full screen */
+    body { padding-top: 0; }
 
-    /* HERO */
+    /* ── HERO ── */
     .hero {
       position: relative; height: 100svh; min-height: 560px;
       background: var(--black); overflow: hidden;
@@ -20,15 +19,12 @@
     }
     .hero-video {
       position: absolute; inset: 0; width: 100%; height: 100%;
-      object-fit: cover; opacity: 1; filter: grayscale(100%);
-      z-index: 0;
+      object-fit: cover; opacity: 1; filter: grayscale(100%); z-index: 0;
     }
     .hero-scanlines {
       position: absolute; inset: 0; pointer-events: none; z-index: 1;
       background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.08) 3px, rgba(0,0,0,0.08) 4px);
     }
-    /* Tint: dark enough for white title to pop, light enough to see the video.
-       Adjust this value: 0.35 = lighter, 0.6 = darker */
     .hero-overlay { position: absolute; inset: 0; z-index: 2; background: rgba(10,10,10,0.45); }
     .hero-content {
       position: relative; z-index: 3;
@@ -49,50 +45,45 @@
     .scroll-pip { position: absolute; top: -100%; left: 0; width: 1px; height: 100%; background: rgba(245,245,243,0.5); animation: pip 1.8s ease-in-out infinite; }
     @keyframes pip { 0% { top: -100%; } 100% { top: 100%; } }
 
-    /* VALUE PROP STRIP */
-    .value-strip {
-      background: var(--black); padding: 40px 32px;
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
+    /* ── ABOUT / MISSION ── */
+    .about-band {
+      background: var(--black);
+      display: grid; grid-template-columns: 1fr 1fr;
     }
-    .value-item {
-      padding: 32px 28px; border: 1px solid rgba(245,245,243,0.07);
-      text-align: center;
+    .about-band-left {
+      padding: 100px 64px;
+      border-right: 1px solid rgba(245,245,243,0.07);
     }
-    .value-icon { font-size: 28px; margin-bottom: 12px; display: block; }
-    .value-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.08em; color: var(--white); margin-bottom: 8px; }
-    .value-desc { font-size: 13px; font-weight: 300; color: rgba(245,245,243,0.4); line-height: 1.6; font-style: italic; }
+    .about-band-label {
+      font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 0.28em;
+      color: rgba(245,245,243,0.28); display: block; margin-bottom: 20px;
+    }
+    .about-band-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(52px, 6vw, 88px); line-height: 0.95;
+      color: var(--white); margin-bottom: 0;
+    }
+    .about-band-right {
+      padding: 100px 64px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .about-band-body {
+      font-size: 16px; font-weight: 300; line-height: 1.9;
+      color: rgba(245,245,243,0.5); margin-bottom: 20px;
+    }
+    .about-band-body strong {
+      color: rgba(245,245,243,0.85); font-weight: 400; font-style: italic;
+    }
+    .about-band-link {
+      font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 0.15em;
+      color: var(--white); text-decoration: none;
+      display: inline-flex; align-items: center; gap: 10px;
+      border-bottom: 1px solid rgba(245,245,243,0.25); padding-bottom: 3px;
+      transition: gap 0.3s, border-color 0.3s;
+    }
+    .about-band-link:hover { gap: 18px; border-color: var(--white); }
 
-    /* PRICING SECTION */
-    .pricing {
-      padding: 100px 32px; background: var(--white);
-      display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
-      max-width: 1200px; margin: 0 auto;
-    }
-    .price-card {
-      padding: 56px 48px; border: 1px solid rgba(10,10,10,0.1);
-      display: flex; flex-direction: column;
-    }
-    .price-card.featured { background: var(--black); border-color: var(--black); }
-    .price-eyebrow {
-      font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 0.25em;
-      color: var(--mid); margin-bottom: 16px; display: block;
-    }
-    .price-card.featured .price-eyebrow { color: rgba(245,245,243,0.35); }
-    .price-heading { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 5vw, 72px); line-height: 1; color: var(--black); margin-bottom: 8px; }
-    .price-card.featured .price-heading { color: var(--white); }
-    .price-amount { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.06em; color: var(--mid); margin-bottom: 28px; }
-    .price-card.featured .price-amount { color: rgba(245,245,243,0.45); }
-    .price-features { list-style: none; margin-bottom: 40px; flex: 1; }
-    .price-features li {
-      font-size: 14px; font-weight: 300; color: var(--dim); line-height: 1.6;
-      padding: 10px 0; border-bottom: 1px solid rgba(10,10,10,0.08);
-      display: flex; align-items: center; gap: 10px;
-    }
-    .price-card.featured .price-features li { color: rgba(245,245,243,0.55); border-bottom-color: rgba(245,245,243,0.08); }
-    .price-features li::before { content: '—'; color: var(--mid); font-family: 'Bebas Neue', sans-serif; font-size: 12px; flex-shrink: 0; }
-
-    /* COLLECTIONS */
+    /* ── COLLECTIONS ── */
     .collections { background: var(--white); }
     .col-block {
       display: grid; grid-template-columns: 1fr 1fr;
@@ -122,15 +113,12 @@
     .col-num { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 0.2em; color: var(--mid); margin-bottom: 16px; }
     .col-heading { font-family: 'Bebas Neue', sans-serif; font-size: clamp(56px, 6vw, 96px); line-height: 0.93; color: var(--black); margin-bottom: 20px; }
     .col-body { font-size: 15px; font-weight: 300; line-height: 1.75; color: var(--dim); max-width: 300px; margin-bottom: 24px; }
-    .col-pricing { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; align-items: center; }
-    .col-price-digital { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.06em; color: var(--black); }
-    .col-price-label { font-size: 12px; color: var(--mid); font-style: italic; }
-    .col-price-sep { color: var(--mid); font-size: 12px; }
+    .col-price { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.06em; color: var(--black); margin-bottom: 28px; }
+    .col-price span { font-size: 13px; color: var(--mid); font-family: 'DM Sans', sans-serif; font-weight: 300; font-style: italic; letter-spacing: 0; margin-left: 6px; }
     .col-link {
       font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 0.14em;
       color: var(--black); text-decoration: none; display: inline-flex; align-items: center;
-      gap: 10px; border-bottom: 1.5px solid var(--black); padding-bottom: 3px;
-      transition: gap 0.3s;
+      gap: 10px; border-bottom: 1.5px solid var(--black); padding-bottom: 3px; transition: gap 0.3s;
     }
     .col-link:hover { gap: 18px; }
     .col-vert {
@@ -138,7 +126,7 @@
       font-family: 'Bebas Neue', sans-serif; font-size: 10px; letter-spacing: 0.25em; color: var(--off); white-space: nowrap;
     }
 
-    /* STATEMENT */
+    /* ── STATEMENT ── */
     .statement {
       background: var(--black); padding: 100px 32px; text-align: center; position: relative; overflow: hidden;
     }
@@ -151,16 +139,14 @@
     .statement-h { font-family: 'Bebas Neue', sans-serif; font-size: clamp(44px, 8vw, 112px); line-height: 0.97; color: var(--white); position: relative; }
     .statement-p { font-size: 15px; font-weight: 300; font-style: italic; color: rgba(245,245,243,0.32); margin-top: 24px; }
 
-    /* LATEST DROP */
+    /* ── LATEST DROP ── */
     .drop-section { padding: 80px 32px; background: var(--white); }
     .drop-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 32px; }
     .drop-h { font-family: 'Bebas Neue', sans-serif; font-size: clamp(40px, 5vw, 68px); line-height: 1; color: var(--black); }
     .drop-sub { font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 0.12em; color: var(--mid); text-decoration: none; }
     .drop-sub:hover { color: var(--black); }
     .drop-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; }
-    .drop-card {
-      position: relative; background: #111; aspect-ratio: 3/4; overflow: hidden; cursor: pointer;
-    }
+    .drop-card { position: relative; background: #111; aspect-ratio: 3/4; overflow: hidden; cursor: pointer; }
     .drop-card a { display: block; width: 100%; height: 100%; }
     .drop-card img {
       width: 100%; height: 100%; object-fit: cover; display: block;
@@ -168,16 +154,36 @@
     }
     .drop-card:hover img { transform: scale(1.06); filter: grayscale(0%); }
     .drop-info {
-      position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 14px 14px;
-      background: linear-gradient(to top, rgba(10,10,10,0.9) 0%, transparent 100%);
+      position: absolute; bottom: 0; left: 0; right: 0; padding: 24px 14px 14px;
+      background: linear-gradient(to top, rgba(10,10,10,0.92) 0%, transparent 100%);
     }
-    .drop-name { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 0.08em; color: var(--white); display: block; }
-    .drop-prices { display: flex; gap: 8px; align-items: center; margin-top: 4px; flex-wrap: wrap; }
-    .drop-price-d { font-family: 'Bebas Neue', sans-serif; font-size: 13px; color: var(--white); }
-    .drop-price-p { font-family: 'Bebas Neue', sans-serif; font-size: 13px; color: rgba(245,245,243,0.45); }
-    .drop-price-sep { color: rgba(245,245,243,0.3); font-size: 10px; }
+    .drop-name { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 0.08em; color: var(--white); display: block; margin-bottom: 4px; }
+    .drop-price-d { font-family: 'Bebas Neue', sans-serif; font-size: 14px; color: var(--white); display: block; }
+    .drop-price-p {
+      font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 0.12em;
+      color: rgba(245,245,243,0.35); display: block; margin-top: 2px;
+    }
 
-    /* NEWSLETTER */
+    /* ── COMING SOON STRIP ── */
+    .coming-soon {
+      background: var(--off); border-top: 1px solid rgba(10,10,10,0.08);
+      border-bottom: 1px solid rgba(10,10,10,0.08);
+      padding: 48px 32px;
+      display: flex; align-items: center; justify-content: space-between; gap: 32px;
+      flex-wrap: wrap;
+    }
+    .coming-soon-left {}
+    .coming-soon-tag { font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 0.25em; color: var(--mid); display: block; margin-bottom: 8px; }
+    .coming-soon-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(32px, 4vw, 52px); line-height: 1; color: var(--black); }
+    .coming-soon-right { max-width: 420px; }
+    .coming-soon-desc { font-size: 15px; font-weight: 300; color: var(--dim); line-height: 1.7; margin-bottom: 16px; font-style: italic; }
+    .coming-soon-btn {
+      font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 0.15em;
+      background: none; border: 1px solid rgba(10,10,10,0.2); color: var(--dim);
+      padding: 11px 22px; cursor: default; opacity: 0.6;
+    }
+
+    /* ── NEWSLETTER ── */
     .nl { background: var(--black); padding: 80px 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
     .nl-tag { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 0.22em; color: rgba(245,245,243,0.28); display: block; margin-bottom: 12px; }
     .nl-h { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 5.5vw, 80px); line-height: 0.95; color: var(--white); }
@@ -190,26 +196,28 @@
     .nl-btn:hover { background: var(--off); }
     .nl-fine { font-size: 11px; color: rgba(245,245,243,0.18); margin-top: 10px; font-style: italic; }
 
-    /* RESPONSIVE */
+    /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
-      .value-strip { grid-template-columns: 1fr; gap: 2px; }
-      .pricing { grid-template-columns: 1fr; padding: 60px 24px; }
+      .about-band { grid-template-columns: 1fr; }
+      .about-band-left { padding: 64px 40px 40px; border-right: none; border-bottom: 1px solid rgba(245,245,243,0.07); }
+      .about-band-right { padding: 40px 40px 64px; }
       .col-block { grid-template-columns: 1fr; min-height: auto; }
       .col-visual { height: 60vw; min-height: 280px; }
       .col-text { padding: 48px 32px; }
       .col-vert { display: none; }
       .drop-grid { grid-template-columns: repeat(2, 1fr); }
-      .drop-info { opacity: 1; } /* always show on mobile */
+      .drop-info { opacity: 1; }
       .nl { grid-template-columns: 1fr; gap: 40px; }
+      .coming-soon { flex-direction: column; align-items: flex-start; }
     }
     @media (max-width: 640px) {
       .hero-exit { font-size: clamp(88px, 30vw, 160px); }
       .hero-scroll { display: none; }
-      .pricing { padding: 48px 20px; }
-      .price-card { padding: 36px 24px; }
+      .about-band-left { padding: 56px 24px 32px; }
+      .about-band-right { padding: 32px 24px 56px; }
       .col-text { padding: 36px 20px; }
       .drop-section { padding: 56px 18px; }
-      .drop-grid { grid-template-columns: repeat(2, 1fr); }
+      .coming-soon { padding: 40px 24px; }
       .statement { padding: 72px 20px; }
       .nl { padding: 64px 20px; }
       .nl-form { flex-direction: column; }
@@ -219,8 +227,6 @@
   </style>
 </head>
 <body>
-
-<!-- Nav + Footer injected by etps-nav.js -->
 
 <!-- ── HERO ── -->
 <section class="hero">
@@ -232,10 +238,10 @@
       <span class="hero-exit">Exit</span>
       <span class="hero-the-print-shop">The Print Shop</span>
     </h1>
-    <p class="hero-sub">Digital art downloads from $5 — Print on demand from $45</p>
+    <p class="hero-sub">Quality art for everyone — digital downloads from $5</p>
     <div class="hero-btns">
-      <a href="shop.html?type=digital" class="btn btn-outline-light">Digital Downloads</a>
-      <a href="shop.html" class="btn btn-solid-light">Shop All Art</a>
+      <a href="shop.html" class="btn btn-outline-light">Browse Art</a>
+      <a href="shop.html" class="btn btn-solid-light">Download Now</a>
     </div>
   </div>
   <div class="hero-scroll">
@@ -249,65 +255,36 @@
   <div class="ticker-track">
     <span class="ticker-item">Exit The Print Shop</span><span class="ticker-item sep">◆</span>
     <span class="ticker-item">Digital Downloads from $5</span><span class="ticker-item sep">◆</span>
-    <span class="ticker-item">Print on Demand</span><span class="ticker-item sep">◆</span>
     <span class="ticker-item">Original Art</span><span class="ticker-item sep">◆</span>
-    <span class="ticker-item">Limited Drops</span><span class="ticker-item sep">◆</span>
+    <span class="ticker-item">Built by the Community</span><span class="ticker-item sep">◆</span>
+    <span class="ticker-item">New Drops Weekly</span><span class="ticker-item sep">◆</span>
     <span class="ticker-item">Exit The Print Shop</span><span class="ticker-item sep">◆</span>
     <span class="ticker-item">Digital Downloads from $5</span><span class="ticker-item sep">◆</span>
-    <span class="ticker-item">Print on Demand</span><span class="ticker-item sep">◆</span>
     <span class="ticker-item">Original Art</span><span class="ticker-item sep">◆</span>
-    <span class="ticker-item">Limited Drops</span><span class="ticker-item sep">◆</span>
+    <span class="ticker-item">Built by the Community</span><span class="ticker-item sep">◆</span>
+    <span class="ticker-item">New Drops Weekly</span><span class="ticker-item sep">◆</span>
   </div>
 </div>
 
-<!-- ── VALUE PROPS ── -->
-<div class="value-strip">
-  <div class="value-item reveal">
-    <span class="value-icon">⬇</span>
-    <div class="value-title">Digital Download</div>
-    <p class="value-desc">From $5. Buy, download, print at home or your local print shop. Instant delivery.</p>
+<!-- ── ABOUT / MISSION ── -->
+<div class="about-band" id="about">
+  <div class="about-band-left reveal">
+    <span class="about-band-label">Why We Exist</span>
+    <h2 class="about-band-title">Art Should<br>Cost Less<br>Than a<br>Coffee Run</h2>
   </div>
-  <div class="value-item reveal reveal-d1">
-    <span class="value-icon">🖨</span>
-    <div class="value-title">Print on Demand</div>
-    <p class="value-desc">From $45. We handle printing, framing, and shipping direct to your door.</p>
-  </div>
-  <div class="value-item reveal reveal-d2">
-    <span class="value-icon">∞</span>
-    <div class="value-title">Always Original</div>
-    <p class="value-desc">Every piece is a unique drop. Some editions are limited. Once they're gone, they're gone.</p>
+  <div class="about-band-right reveal reveal-d1">
+    <p class="about-band-body">
+      <strong>Exit The Print Shop was built on a simple belief:</strong> great art shouldn't live behind gallery walls and four-figure price tags. It should be on your wall, in your space, part of your everyday life.
+    </p>
+    <p class="about-band-body">
+      We create and curate digital art collections that are affordable, accessible, and built to evolve. Every new collection is shaped by <strong>community feedback, current trends,</strong> and a genuine love for celebrating art history — from the movements that changed everything to the aesthetics defining culture right now.
+    </p>
+    <p class="about-band-body">
+      Download a file today. Print it at your local shop. Put something on your wall that actually means something.
+    </p>
+    <a href="shop.html" class="about-band-link">Browse the Collection →</a>
   </div>
 </div>
-
-<!-- ── PRICING ── -->
-<section class="pricing" id="pricing">
-  <div class="price-card reveal">
-    <span class="price-eyebrow">Most Popular</span>
-    <h2 class="price-heading">Digital<br>Download</h2>
-    <div class="price-amount">From $5</div>
-    <ul class="price-features">
-      <li>Instant download after purchase</li>
-      <li>High-resolution files (300dpi)</li>
-      <li>Personal use — print as many copies as you want</li>
-      <li>Print at home or any print shop</li>
-      <li>Available in multiple sizes</li>
-    </ul>
-    <a href="shop.html?type=digital" class="btn btn-solid-dark">Browse Digital Art</a>
-  </div>
-  <div class="price-card featured reveal reveal-d1">
-    <span class="price-eyebrow">Premium Option</span>
-    <h2 class="price-heading" style="color:var(--white)">Print on<br>Demand</h2>
-    <div class="price-amount">From $45</div>
-    <ul class="price-features">
-      <li>Professional archival printing</li>
-      <li>Ships in a protective tube</li>
-      <li>Optional framing available</li>
-      <li>Certificate of authenticity</li>
-      <li>Limited edition runs</li>
-    </ul>
-    <a href="shop.html?type=print" class="btn btn-solid-light">Browse Prints</a>
-  </div>
-</section>
 
 <!-- ── COLLECTIONS ── -->
 <div class="collections" id="collections">
@@ -322,12 +299,8 @@
     <div class="col-text">
       <div class="col-num">01 — Collection</div>
       <h2 class="col-heading">Chromatic<br>Riot</h2>
-      <p class="col-body">Explosive colour, archival cotton rag. These prints end arguments about what goes on the wall.</p>
-      <div class="col-pricing">
-        <span class="col-price-digital">Digital from $5</span>
-        <span class="col-price-sep">|</span>
-        <span class="col-price-label">Print from $85</span>
-      </div>
+      <p class="col-body">Explosive colour, archival-grade files. These prints end arguments about what goes on the wall.</p>
+      <div class="col-price">Digital Download from $5 <span>instant delivery</span></div>
       <a href="shop.html" class="col-link">Shop Collection →</a>
       <span class="col-vert">Collection 01</span>
     </div>
@@ -343,12 +316,8 @@
     <div class="col-text">
       <div class="col-num">02 — Collection</div>
       <h2 class="col-heading">Noir<br>Objects</h2>
-      <p class="col-body">Dark, sculptural, and definitely not playing nice with your other stuff.</p>
-      <div class="col-pricing">
-        <span class="col-price-digital">Digital from $5</span>
-        <span class="col-price-sep">|</span>
-        <span class="col-price-label">Print from $85</span>
-      </div>
+      <p class="col-body">Dark, sculptural energy. Download the file and take it to any print shop.</p>
+      <div class="col-price">Digital Download from $5 <span>instant delivery</span></div>
       <a href="shop.html" class="col-link">Shop Collection →</a>
       <span class="col-vert">Collection 02</span>
     </div>
@@ -363,12 +332,8 @@
     <div class="col-text">
       <div class="col-num">03 — Collection</div>
       <h2 class="col-heading">Soft<br>Chaos</h2>
-      <p class="col-body">Dreamy abstracts, limited risograph runs. Never reprinted. Your wall gets something nobody else's has.</p>
-      <div class="col-pricing">
-        <span class="col-price-digital">Digital from $5</span>
-        <span class="col-price-sep">|</span>
-        <span class="col-price-label">Print from $65</span>
-      </div>
+      <p class="col-body">Dreamy abstracts, limited drops. Never reprinted. Your wall gets something nobody else has.</p>
+      <div class="col-price">Digital Download from $5 <span>instant delivery</span></div>
       <a href="shop.html" class="col-link">Shop Collection →</a>
       <span class="col-vert">Collection 03</span>
     </div>
@@ -378,9 +343,9 @@
 
 <!-- ── STATEMENT ── -->
 <section class="statement">
-  <span class="statement-pre">The ETPS Manifesto</span>
-  <div class="statement-h">Art that exits<br>the ordinary</div>
-  <p class="statement-p">Download it today. Frame it tomorrow. Own something that matters.</p>
+  <span class="statement-pre">The ETPS Way</span>
+  <div class="statement-h">Download it.<br>Print it.<br>Own it.</div>
+  <p class="statement-p">High-res files. Any size. Any printer. Yours forever.</p>
 </section>
 
 <!-- ── LATEST DROP ── -->
@@ -390,17 +355,13 @@
     <a href="shop.html" class="drop-sub">View all →</a>
   </div>
   <div class="drop-grid">
-    <!-- Each drop card links to product.html — update href per piece -->
     <div class="drop-card">
       <a href="product.html">
         <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=700&q=80" alt="Study in Orange" />
         <div class="drop-info">
           <span class="drop-name">Study in Orange</span>
-          <div class="drop-prices">
-            <span class="drop-price-d">Digital $5</span>
-            <span class="drop-price-sep">|</span>
-            <span class="drop-price-p">Print $140</span>
-          </div>
+          <span class="drop-price-d">Digital — $5</span>
+          <span class="drop-price-p">Print on demand — coming soon</span>
         </div>
       </a>
     </div>
@@ -409,11 +370,8 @@
         <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=700&q=80" alt="Polaroid Stack" />
         <div class="drop-info">
           <span class="drop-name">Polaroid Stack</span>
-          <div class="drop-prices">
-            <span class="drop-price-d">Digital $5</span>
-            <span class="drop-price-sep">|</span>
-            <span class="drop-price-p">Print $95</span>
-          </div>
+          <span class="drop-price-d">Digital — $5</span>
+          <span class="drop-price-p">Print on demand — coming soon</span>
         </div>
       </a>
     </div>
@@ -422,11 +380,8 @@
         <img src="https://images.unsplash.com/photo-1605106702842-01a887a31122?w=700&q=80" alt="Slab No. 4" />
         <div class="drop-info">
           <span class="drop-name">Slab No. 4</span>
-          <div class="drop-prices">
-            <span class="drop-price-d">Digital $5</span>
-            <span class="drop-price-sep">|</span>
-            <span class="drop-price-p">Print $210</span>
-          </div>
+          <span class="drop-price-d">Digital — $5</span>
+          <span class="drop-price-p">Print on demand — coming soon</span>
         </div>
       </a>
     </div>
@@ -435,11 +390,8 @@
         <img src="https://images.unsplash.com/photo-1549289524-06cf8837ace8?w=700&q=80" alt="The Blue Hour" />
         <div class="drop-info">
           <span class="drop-name">The Blue Hour</span>
-          <div class="drop-prices">
-            <span class="drop-price-d">Digital $5</span>
-            <span class="drop-price-sep">|</span>
-            <span class="drop-price-p">Print $175</span>
-          </div>
+          <span class="drop-price-d">Digital — $5</span>
+          <span class="drop-price-p">Print on demand — coming soon</span>
         </div>
       </a>
     </div>
@@ -448,27 +400,36 @@
         <img src="https://images.unsplash.com/photo-1561214115-f2f134cc4912?w=700&q=80" alt="Form Study" />
         <div class="drop-info">
           <span class="drop-name">Form Study</span>
-          <div class="drop-prices">
-            <span class="drop-price-d">Digital $5</span>
-            <span class="drop-price-sep">|</span>
-            <span class="drop-price-p">Print $130</span>
-          </div>
+          <span class="drop-price-d">Digital — $5</span>
+          <span class="drop-price-p">Print on demand — coming soon</span>
         </div>
       </a>
     </div>
   </div>
 </section>
 
+<!-- ── PRINT ON DEMAND COMING SOON ── -->
+<div class="coming-soon">
+  <div class="coming-soon-left">
+    <span class="coming-soon-tag">Coming Soon</span>
+    <h3 class="coming-soon-title">Print on<br>Demand</h3>
+  </div>
+  <div class="coming-soon-right">
+    <p class="coming-soon-desc">Professional archival prints shipped directly to your door — framed or unframed. We're setting this up properly so it's worth the wait. Sign up below to be first to know when it drops.</p>
+    <div class="coming-soon-btn">Notify Me When Live</div>
+  </div>
+</div>
+
 <!-- ── NEWSLETTER ── -->
 <section class="nl">
   <div>
-    <span class="nl-tag">Drop Alerts</span>
-    <h2 class="nl-h">Get In<br>Early</h2>
+    <span class="nl-tag">Stay in the Loop</span>
+    <h2 class="nl-h">New Art<br>Every Week</h2>
   </div>
   <div>
-    <p class="nl-desc">New art drops weekly. Digital downloads from $5. Be first — these sell out.</p>
+    <p class="nl-desc">Digital downloads from $5. New collections shaped by you. Be first — drops sell out fast.</p>
     <form class="nl-form" onsubmit="nlSubmit(event)">
-      <input type="email" class="nl-input" placeholder="your@email.com" required />
+      <input type="email" id="nl-email" class="nl-input" placeholder="your@email.com" required />
       <button type="submit" class="nl-btn">Join →</button>
     </form>
     <p class="nl-fine">No spam. Unsubscribe anytime. We hate newsletters too.</p>
@@ -477,15 +438,14 @@
 
 <script src="etps-nav.js"></script>
 <script>
-  // Collection block scroll reveal
-  const blockIO = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
+  var blockIO = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
       if (!e.isIntersecting) return;
-      e.target.querySelectorAll('.col-visual-img, .col-accent').forEach(el => el.classList.add('in'));
+      e.target.querySelectorAll('.col-visual-img, .col-accent').forEach(function(el) { el.classList.add('in'); });
       blockIO.unobserve(e.target);
     });
   }, { threshold: 0.15 });
-  document.querySelectorAll('[data-reveal-block]').forEach(el => blockIO.observe(el));
+  document.querySelectorAll('[data-reveal-block]').forEach(function(el) { blockIO.observe(el); });
 </script>
 </body>
 </html>
