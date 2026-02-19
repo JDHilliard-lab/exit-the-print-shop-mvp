@@ -93,9 +93,10 @@
   document.body.insertAdjacentHTML('beforeend', footerHTML);
 
   // ── Highlight active nav link
-  const path = window.location.pathname.split('/').pop();
-  document.querySelectorAll('.nav-links a').forEach(a => {
-    if (a.getAttribute('href') === path) a.classList.add('active');
+  const path = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links a').forEach(function(a) {
+    const href = a.getAttribute('href').split('?')[0];
+    if (href === path) a.classList.add('active');
   });
 
   // ── Scroll reveal observer — works on all pages
