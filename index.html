@@ -1,103 +1,1165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exit the Print Shop</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Custom smooth scrolling and font scaling */
-        html { scroll-behavior: smooth; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exit The Print Shop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Neue+Haas+Grotesk+Display+Pro:wght@400;500&family=Syncopate:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #0d0d0b;
+      --paper: #f5f2eb;
+      --ecru: #e8e3d8;
+      --gold: #b89a5a;
+      --gold-light: #d4b97a;
+      --warm-white: #faf8f3;
+      --grey: #8a8680;
+      --dark-grey: #3a3834;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      background: var(--paper);
+      color: var(--ink);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom Cursor */
+    .cursor {
+      position: fixed;
+      width: 8px; height: 8px;
+      background: var(--ink);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: all 0.25s ease;
+      opacity: 0.7;
+    }
+    body:has(a:hover) .cursor-ring,
+    body:has(button:hover) .cursor-ring {
+      transform: translate(-50%, -50%) scale(1.8);
+      border-color: var(--gold-light);
+      opacity: 1;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 48px;
+      mix-blend-mode: normal;
+      transition: background 0.4s ease, padding 0.4s ease;
+    }
+    nav.scrolled {
+      background: rgba(245, 242, 235, 0.92);
+      backdrop-filter: blur(12px);
+      padding: 16px 48px;
+      border-bottom: 1px solid var(--ecru);
+    }
+    .nav-logo {
+      font-family: 'Syncopate', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--ink);
+      text-decoration: none;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cart {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--ink);
+      cursor: none;
+      background: none;
+      border: none;
+    }
+    .cart-count {
+      width: 18px; height: 18px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: var(--warm-white);
+      font-family: 'Syncopate', sans-serif;
+    }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: none;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--ink);
+      transition: all 0.3s ease;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 140px 60px 80px;
+      background: var(--warm-white);
+      position: relative;
+    }
+    .hero-eyebrow {
+      font-family: 'Syncopate', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.3s forwards;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 6vw, 88px);
+      font-weight: 300;
+      line-height: 1.0;
+      color: var(--ink);
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.5s forwards;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero-sub {
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--grey);
+      line-height: 1.7;
+      max-width: 340px;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.7s forwards;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.9s forwards;
+    }
+    .btn-primary {
+      font-family: 'Syncopate', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--warm-white);
+      background: var(--ink);
+      border: none;
+      padding: 18px 36px;
+      cursor: none;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: translateX(-100%);
+      transition: transform 0.4s ease;
+      z-index: 0;
+    }
+    .btn-primary:hover::after { transform: translateX(0); }
+    .btn-primary span { position: relative; z-index: 1; }
+    .btn-secondary {
+      font-family: 'Syncopate', sans-serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: none;
+      border: 1px solid var(--ecru);
+      padding: 18px 36px;
+      cursor: none;
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 0.3s ease, color 0.3s ease;
+    }
+    .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+      background: var(--ecru);
+    }
+    .hero-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0;
+      animation: heroImg 1.4s ease 0.2s forwards;
+      transform: scale(1.06);
+    }
+    @keyframes heroImg {
+      to { opacity: 1; transform: scale(1); }
+    }
+    .hero-number {
+      position: absolute;
+      bottom: 40px;
+      right: 40px;
+      font-family: 'Syncopate', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--paper);
+      opacity: 0.7;
+    }
+    .scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 60px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Syncopate', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--grey);
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.2s forwards;
+    }
+    .scroll-line {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      animation: scrollLine 2s ease-in-out 1.5s infinite;
+    }
+    @keyframes scrollLine {
+      0%, 100% { width: 40px; opacity: 1; }
+      50% { width: 20px; opacity: 0.5; }
+    }
+
+    /* MARQUEE */
+    .marquee-strip {
+      background: var(--ink);
+      padding: 16px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-inner {
+      display: inline-flex;
+      animation: marquee 20s linear infinite;
+    }
+    .marquee-inner span {
+      font-family: 'Syncopate', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      padding: 0 40px;
+    }
+    .marquee-inner span.sep {
+      color: var(--dark-grey);
+      font-size: 6px;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* SECTION HEADER */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 56px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--ecru);
+    }
+    .section-eyebrow {
+      font-family: 'Syncopate', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+    .section-title em { font-style: italic; color: var(--gold); }
+    .view-all {
+      font-family: 'Syncopate', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--ecru);
+      padding-bottom: 2px;
+      transition: border-color 0.3s ease, color 0.3s ease;
+      white-space: nowrap;
+    }
+    .view-all:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* FEATURED COLLECTION */
+    .featured {
+      padding: 120px 60px;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    .product-card {
+      position: relative;
+      group: true;
+    }
+    .product-img-wrap {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      background: var(--ecru);
+      margin-bottom: 20px;
+    }
+    .product-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .product-card:hover .product-img-wrap img { transform: scale(1.06); }
+    .product-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(13,13,11,0.0);
+      display: flex;
+      align-items: flex-end;
+      padding: 24px;
+      transition: background 0.4s ease;
+    }
+    .product-card:hover .product-overlay { background: rgba(13,13,11,0.35); }
+    .product-overlay-btn {
+      font-family: 'Syncopate', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--warm-white);
+      background: rgba(245,242,235,0.15);
+      border: 1px solid rgba(245,242,235,0.4);
+      backdrop-filter: blur(8px);
+      padding: 12px 20px;
+      cursor: none;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.4s ease;
+      width: 100%;
+      text-align: center;
+    }
+    .product-card:hover .product-overlay-btn {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .product-tag {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      font-family: 'Syncopate', sans-serif;
+      font-size: 8px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--warm-white);
+      background: var(--gold);
+      padding: 6px 10px;
+    }
+    .product-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .product-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--grey);
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+    .product-price {
+      font-family: 'Syncopate', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--dark-grey);
+    }
+
+    /* EDITORIAL SECTION */
+    .editorial {
+      background: var(--ink);
+      padding: 120px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .editorial::before {
+      content: 'MMXXV';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 280px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.025);
+      pointer-events: none;
+      white-space: nowrap;
+      letter-spacing: -0.05em;
+    }
+    .editorial-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      position: relative;
+    }
+    .editorial-img-stack {
+      position: relative;
+      height: 600px;
+    }
+    .editorial-img-main {
+      position: absolute;
+      top: 0; left: 0;
+      width: 72%; height: 86%;
+      object-fit: cover;
+    }
+    .editorial-img-accent {
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 52%; height: 52%;
+      object-fit: cover;
+      border: 4px solid var(--ink);
+    }
+    .editorial-content {}
+    .editorial-eyebrow {
+      font-family: 'Syncopate', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 24px;
+    }
+    .editorial-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(42px, 4.5vw, 68px);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--paper);
+      margin-bottom: 32px;
+    }
+    .editorial-title em { font-style: italic; color: var(--gold); }
+    .editorial-body {
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(245,242,235,0.6);
+      margin-bottom: 48px;
+    }
+    .divider-gold {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin-bottom: 32px;
+    }
+
+    /* GALLERY STRIP */
+    .gallery-strip {
+      padding: 80px 0;
+      background: var(--ecru);
+      overflow: hidden;
+    }
+    .gallery-strip-inner {
+      display: flex;
+      gap: 4px;
+    }
+    .gallery-strip-img {
+      flex: 0 0 calc(100vw / 3.8);
+      height: 340px;
+      object-fit: cover;
+      filter: grayscale(20%);
+      transition: filter 0.5s ease, flex 0.5s ease;
+    }
+    .gallery-strip-img:hover {
+      filter: grayscale(0%);
+      flex: 0 0 calc(100vw / 2.5);
+    }
+
+    /* ABOUT STRIP */
+    .about-strip {
+      padding: 100px 60px;
+      max-width: 1440px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-label {
+      font-family: 'Syncopate', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+    }
+    .about-content {}
+    .about-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 3vw, 44px);
+      font-weight: 300;
+      line-height: 1.3;
+      font-style: italic;
+      color: var(--ink);
+      margin-bottom: 32px;
+      position: relative;
+      padding-left: 30px;
+    }
+    .about-quote::before {
+      content: '"';
+      position: absolute;
+      left: 0;
+      top: -10px;
+      font-size: 80px;
+      color: var(--ecru);
+      line-height: 1;
+    }
+    .about-text {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--grey);
+    }
+
+    /* NEWSLETTER */
+    .newsletter {
+      background: var(--ink);
+      padding: 100px 60px;
+      text-align: center;
+    }
+    .newsletter-eyebrow {
+      font-family: 'Syncopate', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 24px;
+    }
+    .newsletter-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4vw, 60px);
+      font-weight: 300;
+      color: var(--paper);
+      margin-bottom: 16px;
+    }
+    .newsletter-title em { font-style: italic; color: var(--gold); }
+    .newsletter-sub {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(245,242,235,0.5);
+      margin-bottom: 48px;
+      font-style: italic;
+    }
+    .newsletter-form {
+      display: flex;
+      max-width: 480px;
+      margin: 0 auto;
+      gap: 0;
+    }
+    .newsletter-input {
+      flex: 1;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      background: rgba(245,242,235,0.07);
+      border: 1px solid rgba(245,242,235,0.2);
+      border-right: none;
+      color: var(--paper);
+      padding: 18px 24px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .newsletter-input::placeholder { color: rgba(245,242,235,0.3); font-style: italic; }
+    .newsletter-input:focus { border-color: var(--gold); }
+    .newsletter-btn {
+      font-family: 'Syncopate', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: var(--gold);
+      color: var(--ink);
+      border: none;
+      padding: 18px 28px;
+      cursor: none;
+      font-weight: 700;
+      transition: background 0.3s;
+      white-space: nowrap;
+    }
+    .newsletter-btn:hover { background: var(--gold-light); }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink);
+      padding: 60px;
+      border-top: 1px solid rgba(245,242,235,0.1);
+    }
+    .footer-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+    }
+    .footer-brand {}
+    .footer-logo {
+      font-family: 'Syncopate', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--paper);
+      display: block;
+      margin-bottom: 16px;
+    }
+    .footer-tagline {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(245,242,235,0.4);
+      font-style: italic;
+      line-height: 1.6;
+    }
+    .footer-col h4 {
+      font-family: 'Syncopate', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul a {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(245,242,235,0.5);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer-col ul a:hover { color: var(--gold); }
+    .footer-bottom {
+      max-width: 1440px;
+      margin: 40px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid rgba(245,242,235,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy {
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(245,242,235,0.25);
+      letter-spacing: 0.05em;
+    }
+    .footer-socials {
+      display: flex;
+      gap: 24px;
+    }
+    .footer-socials a {
+      font-family: 'Syncopate', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: rgba(245,242,235,0.35);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer-socials a:hover { color: var(--gold); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* MOBILE NAV */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: var(--ink);
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    .mobile-menu.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .mobile-menu a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 40px;
+      font-weight: 300;
+      color: var(--paper);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: color 0.3s;
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+    .mobile-close {
+      position: absolute;
+      top: 28px;
+      right: 40px;
+      font-family: 'Syncopate', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      nav { padding: 20px 32px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 140px 32px 60px; }
+      .hero-right { height: 60vw; min-height: 300px; }
+      .featured { padding: 80px 32px; }
+      .products-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+      .editorial { padding: 80px 32px; }
+      .editorial-inner { grid-template-columns: 1fr; gap: 40px; }
+      .editorial-img-stack { height: 400px; }
+      .about-strip { padding: 80px 32px; gap: 40px; }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+      .newsletter { padding: 80px 32px; }
+      footer { padding: 60px 32px; }
+    }
+
+    @media (max-width: 600px) {
+      .hero-title { font-size: 40px; }
+      .hero-left { padding: 120px 24px 60px; }
+      .products-grid { grid-template-columns: 1fr; }
+      .section-header { flex-direction: column; gap: 16px; }
+      .about-strip { grid-template-columns: 1fr; }
+      .about-label { display: none; }
+      .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+      .newsletter-form { flex-direction: column; }
+      .newsletter-input { border-right: 1px solid rgba(245,242,235,0.2); border-bottom: none; }
+      .gallery-strip-img { height: 220px; flex: 0 0 70vw; }
+      nav { padding: 20px 24px; }
+      .featured { padding: 60px 24px; }
+      .editorial { padding: 60px 24px; }
+      .newsletter { padding: 60px 24px; }
+      footer { padding: 40px 24px; }
+    }
+
+    /* Image placeholder gradient fallbacks */
+    .img-placeholder-1 { background: linear-gradient(135deg, #c9b99a 0%, #8a7460 100%); }
+    .img-placeholder-2 { background: linear-gradient(135deg, #a89070 0%, #6b5840 100%); }
+    .img-placeholder-3 { background: linear-gradient(135deg, #d4c4a8 0%, #9a8a70 100%); }
+    .img-placeholder-4 { background: linear-gradient(135deg, #b8a888 0%, #786858 100%); }
+    .img-placeholder-5 { background: linear-gradient(135deg, #c0b098 0%, #857565 100%); }
+  </style>
 </head>
-<body class="bg-black text-white font-sans antialiased">
+<body>
 
-  <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-zinc-900 px-6 py-4 flex justify-between items-center">
-    <div class="font-black uppercase tracking-tighter text-xl">ETPS.</div>
-    <div class="flex gap-6 uppercase text-[10px] tracking-widest font-bold">
-      <a href="#" class="hover:text-zinc-400">Vault</a>
-      <a href="#" class="hover:text-zinc-400">Trade</a>
-    </div>
-  </nav>
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
-  <section class="relative h-[70vh] md:h-[85vh] flex items-center justify-center overflow-hidden">
-    <div class="z-10 text-center px-6 mt-16">
-      <h1 class="text-5xl md:text-8xl font-black uppercase tracking-tighter mb-4 leading-none">
-        Exit the <br class="md:hidden"> Print Shop
-      </h1>
-      <p class="text-zinc-400 text-xs md:text-sm max-w-2xl mx-auto uppercase tracking-[0.3em]">
-        Digital Vault & Commercial Art House
-      </p>
-      <button class="mt-10 px-8 py-4 bg-white text-black text-xs font-black uppercase hover:invert transition-all duration-300">
-        Enter The Vault
-      </button>
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobileMenu()">Close ✕</button>
+  <a href="#" onclick="closeMobileMenu()">Shop</a>
+  <a href="#" onclick="closeMobileMenu()">Collections</a>
+  <a href="#" onclick="closeMobileMenu()">About</a>
+  <a href="#" onclick="closeMobileMenu()">Contact</a>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Exit The Print Shop</a>
+  <ul class="nav-links">
+    <li><a href="#">Shop</a></li>
+    <li><a href="#">Collections</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <button class="nav-cart">
+    Bag <span class="cart-count">0</span>
+  </button>
+  <button class="hamburger" onclick="openMobileMenu()" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <span class="hero-eyebrow">New Collection — 2025</span>
+    <h1 class="hero-title">Art That<br><em>Escapes</em><br>The Ordinary</h1>
+    <p class="hero-sub">Curated prints and home objects for spaces that refuse to whisper.</p>
+    <div class="hero-cta">
+      <a href="#collection" class="btn-primary"><span>Shop Now</span></a>
+      <a href="#about" class="btn-secondary">Our Story</a>
     </div>
-    <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/60 to-black"></div>
-    <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=1200&q=80" 
-         class="absolute inset-0 w-full h-full object-cover -z-10 opacity-50" />
-  </section>
-<section class="bg-zinc-900 mx-4 md:mx-6 p-8 md:p-16 border border-white/10 mt-20">
-  <div class="max-w-4xl mx-auto text-center">
-    <p class="text-xs uppercase tracking-[0.5em] text-zinc-500 mb-4">Curated Package</p>
-    <h2 class="text-4xl md:text-6xl font-black uppercase mb-8">The Salon Hang Vol. 1</h2>
-    
-    <div class="flex flex-wrap justify-center gap-2 mb-10">
-      <div class="w-20 h-28 bg-black"></div>
-      <div class="w-32 h-20 bg-black"></div>
-      <div class="w-24 h-32 bg-black"></div>
-      <div class="w-20 h-20 bg-black"></div>
-      <div class="w-28 h-20 bg-black"></div>
+    <div class="scroll-hint">
+      <span class="scroll-line"></span>
+      Scroll to Explore
     </div>
-    
-    <div class="flex flex-col md:flex-row justify-center gap-4">
-      <button class="bg-white text-black px-8 py-4 font-black uppercase text-xs">Buy Bundle (Digital - $45)</button>
-      <button class="border border-white text-white px-8 py-4 font-black uppercase text-xs">Buy Bundle (Physical - $250)</button>
+  </div>
+  <div class="hero-right">
+    <!-- Replace src with your image 1 -->
+    <img
+      src="https://images.unsplash.com/photo-1513519245088-0e12902e35ca?w=1200&q=80"
+      alt="Featured artwork hero"
+      class="hero-img"
+      onerror="this.style.display='none';this.parentElement.classList.add('img-placeholder-1')"
+    />
+    <div class="hero-number">01 / 05</div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>Exit The Print Shop</span><span class="sep">◆</span>
+    <span>Original Art</span><span class="sep">◆</span>
+    <span>Home Decor</span><span class="sep">◆</span>
+    <span>Limited Editions</span><span class="sep">◆</span>
+    <span>Curator's Selection</span><span class="sep">◆</span>
+    <span>Exit The Print Shop</span><span class="sep">◆</span>
+    <span>Original Art</span><span class="sep">◆</span>
+    <span>Home Decor</span><span class="sep">◆</span>
+    <span>Limited Editions</span><span class="sep">◆</span>
+    <span>Curator's Selection</span><span class="sep">◆</span>
+    <span>Exit The Print Shop</span><span class="sep">◆</span>
+    <span>Original Art</span><span class="sep">◆</span>
+    <span>Home Decor</span><span class="sep">◆</span>
+    <span>Limited Editions</span><span class="sep">◆</span>
+    <span>Curator's Selection</span><span class="sep">◆</span>
+  </div>
+</div>
+
+<!-- FEATURED COLLECTION -->
+<section class="featured" id="collection">
+  <div class="section-header reveal">
+    <div>
+      <span class="section-eyebrow">Featured</span>
+      <h2 class="section-title">The <em>Edit</em></h2>
+    </div>
+    <a href="#" class="view-all">View All →</a>
+  </div>
+
+  <div class="products-grid">
+    <!-- Product 1 -->
+    <div class="product-card reveal">
+      <div class="product-img-wrap">
+        <!-- Replace src with your image 2 -->
+        <img
+          src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80"
+          alt="Abstract No. 7"
+          onerror="this.style.display='none';this.parentElement.classList.add('img-placeholder-2')"
+        />
+        <span class="product-tag">New</span>
+        <div class="product-overlay">
+          <button class="product-overlay-btn">Quick Add</button>
+        </div>
+      </div>
+      <div class="product-name">Abstract No. 7</div>
+      <div class="product-desc">Archival giclee on cotton rag</div>
+      <div class="product-price">$240</div>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="product-card reveal" style="transition-delay:0.15s">
+      <div class="product-img-wrap">
+        <!-- Replace src with your image 3 -->
+        <img
+          src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80"
+          alt="Vessel Study"
+          onerror="this.style.display='none';this.parentElement.classList.add('img-placeholder-3')"
+        />
+        <span class="product-tag">Limited</span>
+        <div class="product-overlay">
+          <button class="product-overlay-btn">Quick Add</button>
+        </div>
+      </div>
+      <div class="product-name">Vessel Study</div>
+      <div class="product-desc">Hand-thrown ceramic, signed</div>
+      <div class="product-price">$395</div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="product-card reveal" style="transition-delay:0.3s">
+      <div class="product-img-wrap">
+        <!-- Replace src with your image 4 -->
+        <img
+          src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800&q=80"
+          alt="Penumbra Print"
+          onerror="this.style.display='none';this.parentElement.classList.add('img-placeholder-4')"
+        />
+        <div class="product-overlay">
+          <button class="product-overlay-btn">Quick Add</button>
+        </div>
+      </div>
+      <div class="product-name">Penumbra Print</div>
+      <div class="product-desc">Risograph, edition of 30</div>
+      <div class="product-price">$185</div>
     </div>
   </div>
 </section>
-  <main class="max-w-[1600px] mx-auto py-12 md:py-20 px-4 md:px-6">
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-12 gap-4">
-      <div>
-        <h2 class="text-2xl md:text-4xl font-black uppercase tracking-tighter">Current Drops</h2>
-        <p class="text-zinc-500 text-[10px] uppercase tracking-widest mt-1">Curated Collections Vol. 01</p>
-      </div>
-      <a href="#" class="text-zinc-400 hover:text-white underline uppercase text-[10px] tracking-widest font-bold">View Archive</a>
+
+<!-- EDITORIAL / STORY SECTION -->
+<section class="editorial">
+  <div class="editorial-inner">
+    <div class="editorial-img-stack reveal">
+      <!-- Replace src with your image 5 -->
+      <img
+        src="https://images.unsplash.com/photo-1541123437800-1bb1317badc2?w=900&q=80"
+        alt="Studio editorial"
+        class="editorial-img-main"
+        onerror="this.style.display='none';this.classList.add('img-placeholder-5')"
+      />
+      <img
+        src="https://images.unsplash.com/photo-1513519245088-0e12902e35ca?w=600&q=80"
+        alt="Detail shot"
+        class="editorial-img-accent"
+        onerror="this.style.display='none';this.classList.add('img-placeholder-1')"
+      />
     </div>
-
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4">
-      
-      <div class="group relative aspect-[3/4] overflow-hidden bg-zinc-900">
-        <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=800&q=80" 
-             class="w-full h-full object-cover transition duration-700 group-hover:scale-110" />
-        
-        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity p-4 md:p-8 flex flex-col justify-end">
-          <p class="text-[8px] md:text-xs uppercase tracking-widest text-zinc-300">Abstract Watercolor</p>
-          <h3 class="text-sm md:text-2xl font-bold uppercase leading-tight">Bleed Series No. 1</h3>
-          <p class="mt-2 font-mono text-[9px] md:text-sm">$15 Digital / $65 Physical</p>
-          <button class="mt-4 w-full py-2 border border-white/50 text-[9px] uppercase font-black hover:bg-white hover:text-black transition">Add to Vault</button>
-        </div>
-      </div>
-
-      <div class="group relative aspect-[3/4] overflow-hidden bg-zinc-900">
-        <img src="https://images.unsplash.com/photo-1633167606207-d840b5070fc2?q=80&w=800" 
-             class="w-full h-full object-cover transition duration-700 group-hover:scale-110" />
-        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity p-4 md:p-8 flex flex-col justify-end">
-          <p class="text-[8px] md:text-xs uppercase tracking-widest text-zinc-300">Bold Oil</p>
-          <h3 class="text-sm md:text-2xl font-bold uppercase leading-tight">Neon Monsoon</h3>
-          <p class="mt-2 font-mono text-[9px] md:text-sm">$20 Digital / $80 Physical</p>
-          <button class="mt-4 w-full py-2 border border-white/50 text-[9px] uppercase font-black hover:bg-white hover:text-black transition">Add to Vault</button>
-        </div>
-      </div>
-
+    <div class="editorial-content reveal" style="transition-delay:0.2s">
+      <span class="editorial-eyebrow">Studio Notes</span>
+      <h2 class="editorial-title">Objects that<br>carry <em>weight</em><br>and meaning</h2>
+      <div class="divider-gold"></div>
+      <p class="editorial-body">We source and create art for people who understand that a room is a statement. Every piece in our shop has been selected for its ability to stop you — to demand a second look, to start a conversation.</p>
+      <a href="#" class="btn-primary"><span>Explore the Story</span></a>
     </div>
-  </main>
+  </div>
+</section>
 
-  <footer class="bg-zinc-950 py-20 px-6 border-t border-zinc-900 text-center">
-    <p class="text-zinc-500 uppercase tracking-widest text-xs mb-4">Are you a trade professional?</p>
-    <h3 class="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-8">Hotel & Retail Rollouts</h3>
-    <button class="px-8 py-4 border border-white text-xs font-black uppercase hover:bg-white hover:text-black transition">Request Commercial Quote</button>
-  </footer>
+<!-- GALLERY STRIP -->
+<div class="gallery-strip" aria-label="Gallery preview">
+  <div class="gallery-strip-inner">
+    <img src="https://images.unsplash.com/photo-1513519245088-0e12902e35ca?w=700&q=70" alt="" class="gallery-strip-img" loading="lazy" onerror="this.classList.add('img-placeholder-1')"/>
+    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=70" alt="" class="gallery-strip-img" loading="lazy" onerror="this.classList.add('img-placeholder-2')"/>
+    <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=700&q=70" alt="" class="gallery-strip-img" loading="lazy" onerror="this.classList.add('img-placeholder-3')"/>
+    <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=700&q=70" alt="" class="gallery-strip-img" loading="lazy" onerror="this.classList.add('img-placeholder-4')"/>
+    <img src="https://images.unsplash.com/photo-1541123437800-1bb1317badc2?w=700&q=70" alt="" class="gallery-strip-img" loading="lazy" onerror="this.classList.add('img-placeholder-5')"/>
+  </div>
+</div>
 
+<!-- ABOUT -->
+<section class="about-strip" id="about">
+  <div class="about-label reveal">Exit The Print Shop</div>
+  <div class="about-content reveal">
+    <p class="about-quote">Every print has a before and after — there's the shop, and there's where it lives next.</p>
+    <p class="about-text">Exit The Print Shop was built for collectors, decorators, and the simply obsessed. We believe beautiful things deserve beautiful homes. Our curation spans original paintings, limited-edition prints, ceramics, and objects with soul.</p>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <span class="newsletter-eyebrow">Stay in the Loop</span>
+  <h2 class="newsletter-title">First to the <em>Drop</em></h2>
+  <p class="newsletter-sub">New editions, studio visits, and rare finds — delivered quietly.</p>
+  <form class="newsletter-form" onsubmit="handleSignup(event)">
+    <input type="email" class="newsletter-input" placeholder="your@email.com" required />
+    <button type="submit" class="newsletter-btn">Subscribe</button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="footer-logo">Exit The Print Shop</span>
+      <p class="footer-tagline">Art and objects for spaces that refuse to whisper. Curated with intention.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="#">New Arrivals</a></li>
+        <li><a href="#">Prints</a></li>
+        <li><a href="#">Ceramics</a></li>
+        <li><a href="#">Objects</a></li>
+        <li><a href="#">Sale</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Info</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Sustainability</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Stockists</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <ul>
+        <li><a href="#">Shipping & Returns</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Exit The Print Shop. All rights reserved.</span>
+    <div class="footer-socials">
+      <a href="#">Instagram</a>
+      <a href="#">Pinterest</a>
+      <a href="#">Substack</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Custom Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animateCursor() {
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => io.observe(el));
+
+  // Mobile menu
+  function openMobileMenu() { document.getElementById('mobileMenu').classList.add('open'); }
+  function closeMobileMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+  // Newsletter
+  function handleSignup(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.textContent = 'Thank you ✓';
+    btn.style.background = '#0d0d0b';
+    btn.style.color = '#b89a5a';
+    setTimeout(() => { btn.textContent = 'Subscribe'; btn.style.background = ''; btn.style.color = ''; }, 3000);
+  }
+</script>
 </body>
 </html>
