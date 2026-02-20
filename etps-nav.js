@@ -13,8 +13,6 @@
     <button class="mob-close" onclick="etpsMenuClose()">CLOSE ✕</button>
     <a href="index.html" onclick="etpsMenuClose()">Home</a>
     <a href="shop.html" onclick="etpsMenuClose()">Shop</a>
-    <a href="shop.html?type=digital" onclick="etpsMenuClose()">Digital Downloads</a>
-    <a href="shop.html?type=print" onclick="etpsMenuClose()">Print on Demand</a>
     <a href="about.html" onclick="etpsMenuClose()">About</a>
     <div class="mob-bottom">
       <a href="https://instagram.com" target="_blank">Instagram</a>
@@ -31,12 +29,10 @@
     </a>
     <ul class="nav-links">
       <li><a href="shop.html">Shop</a></li>
-      <li><a href="shop.html?type=digital">Digital Downloads</a></li>
-      <li><a href="shop.html?type=print">Print on Demand</a></li>
       <li><a href="about.html">About</a></li>
     </ul>
     <div class="nav-right">
-      <a href="shop.html" class="nav-bag btn">Shop Now</a>
+      <a href="shop.html" class="nav-bag btn">Download Now</a>
       <button class="hamburger" onclick="etpsMenuOpen()" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
